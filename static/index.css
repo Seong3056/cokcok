@@ -20,7 +20,7 @@ nav #nav-left{
     font-weight: bold;
     padding: 10px;
     box-sizing: border-box;
-
+    align-self: center;
     width: 250px;
 }
 
@@ -32,8 +32,8 @@ article{
 #choice-100{
     width: 80%;
     margin: 0 auto;
-    height: 500px;
-    background-color: tomato;
+    height: 350px;
+    /* background-color: tomato; */
     box-sizing: border-box;
 }
 #choice-100 ul{
@@ -48,6 +48,9 @@ article{
     background-color: greenyellow;
     position: relative;
     background-size: cover;
+}
+#choice-100 li img {
+    width: 100%;
 }
 #choice-100 li div{
     position: absolute;
@@ -64,7 +67,64 @@ article{
     margin: 0 auto;
     margin-top: 50px;
     height: 400px;
-    background-color: skyblue;
+    box-sizing: border-box;
+    padding: 15px;
+
+    /* background-color: skyblue; */
+
+    display: flex;
+}
+.search-100-left{
+    flex: 3;
+    /* background-color: greenyellow; */
+    margin-right: 20px;
+}
+.search-100-left ul {
+    overflow: scroll;
+    height: 100%;
+}
+.search-100-left ul::-webkit-scrollbar {
+    width: 7px;  
+}
+
+.search-100-left ul::-webkit-scrollbar-thumb {
+    background: grey; /* 스크롤바 색상 */
+    border-radius: 10px; /* 스크롤바 둥근 테두리 */
+}
+
+.search-100-left li {
+    padding: 7px;
+    font-size: 15px;
+    line-height: 20px;
+}
+.search-100-left li:hover{
+    border: 0.5px solid grey;
+    color: blue;    
+    cursor: pointer;
+}
+.search-100-detail{
+    flex: 9;
+    background-color: grey;
+    display: flex;
+    padding: 12px;
+}
+.search-100-detail .detail-img{
+    flex: 5;
+    background-color: #FFF;
+    margin-right: 10px;
+}
+.search-100-detail .detail-info{
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+}
+.detail-info .detail-title{
+    flex: 2;
+    background-color: yellowgreen;
+}
+.detail-info .detail-describe{
+    flex: 7;
+    background-color: tomato;
 }
 /* end search-100 */
 
