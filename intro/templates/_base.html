@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/reset-css@4.0.1/reset.min.css"/>
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    <nav>
+        <h1 id="nav-left">방방콕콕</h1>
+        <div id="nav-right">
+
+        </div>
+    </nav>
+    {% block body %}
+    {% endblock %}
+
+    <footer>
+        <div class="footer">
+            cantact us 강민주/문성은/이성민
+        </div>
+    </footer>
+    {% block script %}
+    {% endblock %}
+</body>
+</html>

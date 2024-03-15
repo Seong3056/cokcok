@@ -1,0 +1,44 @@
+section{
+    margin: 0 auto;
+    margin-top: 70px;
+    width: 80%;
+}
+
+.title{
+    margin-left: 120px;
+    margin-bottom: 50px;
+    font-size: 48px;
+    font-weight: bold;
+
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+    .info .img {
+        width: 280px;
+        height: 280px;
+        background-color: tomato;
+        padding: 25px;
+    }
+
+    .info .map{
+        width: 280px;
+        height: 280px;
+        background-color: greenyellow;
+        padding: 25px;
+    }
+
+
+.chart{
+    margin-top: 48px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+    .chart.wrap {
+        width: 300px;
+        margin-right: 30px;
+    }

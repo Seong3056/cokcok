@@ -1,0 +1,91 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block head%}
+<link rel="stylesheet" href="{% static 'detail.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+{% endblock %}
+{% block body %}
+<section>
+    <div class="title">관광지명</div>
+    <div class="info">
+        <div class="img">사진</div>
+        <div class="map">지도</div>
+    </div>
+    <div class="chart">
+        
+            <div class="wrap">
+                <canvas id="capita-spending" >
+                </canvas>
+            </div>
+            <div class="wrap">
+                <canvas id="visited" >
+                </canvas>
+            </div>
+        
+    </div>
+</section>
+{% endblock %}
+
+{% block script %}
+<script>
+     var ctx = document.getElementById('capita-spending').getContext('2d');
+     var ctx2 = document.getElementById('visited').getContext('2d');
+        var chart = new Chart(ctx, {
+            // type : 'bar' = 막대차트를 의미합니다.
+            type: 'bar', // 
+            data: {
+                labels: ['하남시','경기도'],
+                datasets: [{
+                    label: '색상',
+                    backgroundColor: [
+                      'red',
+                      'blue'                      
+                    ],
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [5 ,10]
+                }]
+            },
+            options: {
+            scales: {
+                yAxes: [{
+                    display: true,
+                            ticks: {
+                                suggestedMax: 10,// minimum will be 0, unless there is a lower value.					// OR //					
+                                beginAtZero: true // minimum value will be 0.		
+                            }
+                        }]		
+                    }	
+            }
+            
+        });
+        var chart2 = new Chart(ctx2, {
+            // type : 'bar' = 막대차트를 의미합니다.
+            type: 'bar', // 
+            data: {
+                labels: ['하남시','경기도'],
+                datasets: [{
+                    label: '색상',
+                    backgroundColor: [
+                      'red',
+                      'blue'                      
+                    ],
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [5 ,10]
+                }]
+            },
+            options: {
+            scales: {
+                yAxes: [{
+                    display: true,
+                            ticks: {
+                                suggestedMax: 10,// minimum will be 0, unless there is a lower value.					// OR //					
+                                beginAtZero: true // minimum value will be 0.		
+                            }
+                        }]		
+                    }	
+            }
+            
+        });
+
+</script>
+{% endblock %}
