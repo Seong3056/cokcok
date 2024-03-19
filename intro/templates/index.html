@@ -21,8 +21,10 @@
                     <div class="choice-title">
                         <p>{{one.title}}</p>
                     </div>
+                    <div class="tag">
+                        <a href="{% url 'intro:tag' one.category %}">#{{one.category}} #{{one.군구}}</a>
+                    </div>
                     
-                    <!-- <a class="choice-category">#{{one.category}}</a> -->
                 </li>
             </a>
             {% endfor %}
@@ -53,12 +55,15 @@
                     {% csrf_token %}
 
                 </div>
-                <div class="detail-img">                    
-                </div>
-                <div class="detail-info">
-                    <a class="detail-title" href=""><div>제목</div></a>
+                <a class="detail-title" href="">
+                    <div class="detail-img">                    
+                    </div>
+                </a> 
+
+                <!-- <div class="detail-info">
+                    
                     <div class="detail-describe">설명</div>
-                </div>
+                </div>  -->
             
         </div>
     
@@ -89,7 +94,7 @@
         const $detailImg = document.querySelector(".detail-img")
 
         $title.setAttribute("href","/detail/"+e.target.textContent)
-        $title.textContent = e.target.textContent
+        // $title.textContent = e.target.textContent
         $detailImg.style.backgroundImage = `url(${$img.value})`
         // console.log($img.value);
 

@@ -23,10 +23,10 @@
     <div class="chart">
         
         <div class="wrap">
-            <div id="piechart" style="width: 500px; height: 400px;"></div>
+            <div id="piechart" style="width: 400px; height: 400px;"></div>
         </div>
         <div class="wrap">
-            <div id="barchart" style="width: 600px; height: 300px;"></div>
+            <div id="barchart" style="width: 1000px; height: 400px;"></div>
         </div>
         <div class="wrap">
             <div id="linechart" style="width: 800px; height: 400px;"></div>
@@ -43,7 +43,7 @@
     //  let v = JSON.parse("{{ visitor | escapejs }}")
     //  let n = JSON.parse("{{ name | escapejs }}")
     let pie = JSON.parse("{{ pie | escapejs }}")
-    let address = "{{ address | escapejs }}"
+    var address = "{{ address | escapejs }}"
     address = address.split(" ")[1]
     console.log(address);
     google.charts.load('current', {'packages':['corechart']});
@@ -56,7 +56,8 @@
         var i = 0
         arr.push(['방문자', '행정구역'])
         for (let index = 0; index < pie.length; index++) {
-            if(pie[index].기초지자체명 == address)
+            console.log(address.split(" ")[1]);
+            if(pie[index].기초지자체명 == address.split(" ")[1])
                 i = index
             arr.push([pie[index].기초지자체명, pie[index].방문자수])     
         }
@@ -66,8 +67,10 @@
         console.log(arr);
         arr[i] = {offset: 0.2}
         var options = {
-          title: address+'방문 비율',
-          slices: arr
+          title: address.split(" ")[1]+' 방문 비율',
+          slices: arr,
+        width: 400,
+        height: 400,
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -97,7 +100,7 @@ var options = {
     }
 },
         hAxis: {
-          title: `${"{{ local | escapejs }}"}월별 `
+          title: `${"{{ local | escapejs }}"} 월별 `
         },
         vAxis: {
           title: '방문객 수'
@@ -110,11 +113,37 @@ var options = {
     }
     const bar = JSON.parse("{{ bar | escapejs }}")
     var arr = []
+    var address = "{{ address | escapejs }}"
     arr.push(["광역지자체", "인당 지출액", { role: "style" } ])
-    console.log(bar);
-    bar.foreach(element => {
-        arr.push([bar.광역지자체명, bar.지출액,"blue"])
+    
+    let total = 0
+
+    bar.map(e => 
+        
+        {
+            console.log(111111111111+e.광역지자체명,address.split(" ")[0])
+            switch (address.split(" ")[0]) {
+                case "강원특별자치도":
+                    add1 = "강원"
+                case "강원도":
+                    add1 = "강원"
+                case "전북특별자치도":
+                    add1 = "전북"
+                case "전라북도":
+                    add1 = "전북"
+                case "전남특별자치도":
+                    add1 = "전남"
+                case "전라남도":
+                    add1 = "전남"
+            }
+            if(e.광역지자체명 == add1)
+        {arr.push([e.광역지자체명, e.지출액,"color : #ff8692"])    
+    console.log(e.광역지자체명, add1);}
+        arr.push([e.광역지자체명, e.지출액,"color : #5f5fff"])
+        total += e.지출액
     });
+    avg = total/bar.length
+    arr.push(["평균",avg,"color : #b1b136"])
     console.log(arr);
     function drawBarChart() {
       var data = google.visualization.arrayToDataTable(arr);
@@ -123,10 +152,10 @@ var options = {
       
 
       var options = {
-        title: "광역지자체별 지출액 비교",
-        width: 600,
+        title: "다른 지역의 지출액 비교",
+        width: 1000,
         height: 400,
-        bar: {groupWidth: "95%"},
+        bar: {groupWidth: "60%"},
         legend: { position: "none" },
       };
       var chart = new google.visualization.ColumnChart(document.getElementById("barchart"));

@@ -79,7 +79,7 @@ article{
     text-shadow: 0.5px black;
     
 }
-#choice-100 li .choice-category{
+#choice-100 li .tag{
     position: absolute;
     bottom: -46px;
     left: 5px;
@@ -96,6 +96,7 @@ article{
     box-sizing: border-box;
     padding: 15px;
     position: relative;
+    background-color: blanchedalmond;
 
     /* background-color: skyblue; */
 
@@ -105,7 +106,7 @@ article{
     flex: 3;
     /* background-color: greenyellow; */
     margin-right: 20px;
-    border: 0.5px solid black;    
+    /* border: 0.5px solid black;     */
 }
 .search-100-left ul {
     overflow: scroll;
@@ -114,12 +115,16 @@ article{
 .search-100-left ul::-webkit-scrollbar {
     width: 7px;  
 }
-
+.search-100-left ul::-webkit-resizer{
+    display: none;
+}
 .search-100-left ul::-webkit-scrollbar-thumb {
     background: grey; /* 스크롤바 색상 */
     border-radius: 10px; /* 스크롤바 둥근 테두리 */
 }
-
+.search-100-left ul::-webkit-scrollbar-track{
+    background-color: blanchedalmond;
+}
 .search-100-left li {
     padding: 7px;
     font-size: 15px;
@@ -135,13 +140,14 @@ article{
     /* background-color: grey; */
     display: flex;
     padding: 12px;
-    
+    /* background-color: lightgrey; */
 
 
-    border: 0.5px solid black;
+    /* border: 0.5px solid black; */
 }
-.search-100-detail .detail-img{
-    flex: 5;
+.search-100-detail a .detail-img{
+    width: 625px;
+    height: 100%;
     background-color: #FFF;
     margin-right: 10px;
     background-image: url("https://img.freepik.com/premium-vector/south-korean-autumn-travel-vector-illustration_1456-891.jpg") ;
@@ -173,7 +179,7 @@ article{
 
 .search-selection{
     position: absolute;
-    top: -20px;
+    top: -21px;
     left: 15px;
     width: 250px;
     height: 20px;
@@ -189,8 +195,11 @@ article{
     border-radius: 5px;
     cursor: pointer;
 }
+.btn:hover {
+    scale: 1.1;
+}
 .selected{
-    background-color: lightgrey;
+    background-color: blanchedalmond;
 }
 /* end search-100 */
 

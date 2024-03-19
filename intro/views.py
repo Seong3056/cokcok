@@ -26,7 +26,7 @@ def index(request):
     })
     choice = choice.sample(n=10, replace=True)
     print(choice)
-    choice_str = choice.loc[:,["title","image_url"]].to_json(orient="records", force_ascii=False)
+    choice_str = choice.loc[:,["title","image_url","category","군구"]].to_json(orient="records", force_ascii=False)
     choice_json = json.loads(choice_str)
     
     
@@ -95,14 +95,30 @@ def detail(request, local):
     maps= map._repr_html_()
     
     address = data_list[0]["address_name"].split(" ")
-    # print(address)
+    print("add1",address)
+    address = address[0]
+    print("add2",address)
+    match address:
+        case "강원특별자치도":
+            address = "강원"
+        case "강원도":
+            address = "강원"
+        case "전북특별자치도":
+            address = "전북"
+        case "전라북도":
+            address = "전북"
+        case "전남특별자치도":
+            address = "전남"
+        case "전라남도":
+            address = "전남"
+    print("1111",address)
     
     
     path = "intro\\data\\merge.csv"
     absolute_path = os.path.join(settings.BASE_DIR, path)
     df = pd.read_csv(absolute_path)
     df.rename(columns={"기초지자체 방문자 수":"방문자수"},inplace=True)
-    pie = df[df["광역지자체명"] == address[0]][["기초지자체명", "방문자수"]].sort_values(by='방문자수', ascending=False)
+    pie = df[df["광역지자체명"] == address][["기초지자체명", "방문자수"]].sort_values(by='방문자수', ascending=False)
     pie_str = pie.loc[:,["기초지자체명","방문자수"]].to_json(orient="records", force_ascii=False)
     
     path = "intro\\data\\지자체 주요관광지점 입장객.csv"
@@ -118,7 +134,7 @@ def detail(request, local):
     df.rename(columns={"인당 지출액":"지출액"},inplace=True)
     df_str = df.loc[:,["광역지자체명","지출액"]].groupby("광역지자체명").mean().reset_index().to_json(orient="records", force_ascii=False)
     
-    print(df_str)
+    print("111111111"+data_list[0]["address_name"])
     
     context = {
         "j" : choice,
@@ -152,3 +168,20 @@ def check(request):
     return JsonResponse({
         "list" : df_json
     })
+
+def tag(request, tagName):
+    path = "intro\\data\\지자체 주요관광.csv"
+    absolute_path = os.path.join(settings.BASE_DIR, path)
+    df = pd.read_csv(absolute_path)
+    df = df[df["category"] == tagName]
+    df = df.rename(columns={
+        "관광지":"title",        
+        
+    })
+    df_str = df.to_json(orient="records", force_ascii=False)
+    df_json = json.loads(df_str)
+    context = {
+        "lists" : df_json,
+        "tag" : tagName,
+    }
+    return render(request, "tag.html", context)

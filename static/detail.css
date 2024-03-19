@@ -11,7 +11,9 @@ section{
     font-weight: bold;
 
 }
-
+.leaflet-container{
+    border-radius: 8px;
+}
 .info {
     display: flex;
     flex-direction: row;
