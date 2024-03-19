@@ -6,86 +6,132 @@
 {% endblock %}
 {% block body %}
 <section>
-    <div class="title">관광지명</div>
+{% for a in j.title %}            
+    <div class="title">{{a}}</div>
+{% endfor %}
     <div class="info">
-        <div class="img">사진</div>
-        <div class="map">지도</div>
+        
+        {% for a in j.image_url %}            
+            <img class="img" src="{{a}}" alt="">
+        {% endfor %}
+        
+        <div class="map">
+            {{map | safe}}
+        </div>
     </div>
+    <div class="address-name">{{address}}</div>
     <div class="chart">
         
-            <div class="wrap">
-                <canvas id="capita-spending" >
-                </canvas>
-            </div>
-            <div class="wrap">
-                <canvas id="visited" >
-                </canvas>
-            </div>
+        <div class="wrap">
+            <div id="piechart" style="width: 500px; height: 400px;"></div>
+        </div>
+        <div class="wrap">
+            <div id="barchart" style="width: 600px; height: 300px;"></div>
+        </div>
+        <div class="wrap">
+            <div id="linechart" style="width: 800px; height: 400px;"></div>
+        </div>
+
         
     </div>
 </section>
 {% endblock %}
 
 {% block script %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
-     var ctx = document.getElementById('capita-spending').getContext('2d');
-     var ctx2 = document.getElementById('visited').getContext('2d');
-        var chart = new Chart(ctx, {
-            // type : 'bar' = 막대차트를 의미합니다.
-            type: 'bar', // 
-            data: {
-                labels: ['하남시','경기도'],
-                datasets: [{
-                    label: '색상',
-                    backgroundColor: [
-                      'red',
-                      'blue'                      
-                    ],
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [5 ,10]
-                }]
-            },
-            options: {
-            scales: {
-                yAxes: [{
-                    display: true,
-                            ticks: {
-                                suggestedMax: 10,// minimum will be 0, unless there is a lower value.					// OR //					
-                                beginAtZero: true // minimum value will be 0.		
-                            }
-                        }]		
-                    }	
-            }
-            
-        });
-        var chart2 = new Chart(ctx2, {
-            // type : 'bar' = 막대차트를 의미합니다.
-            type: 'bar', // 
-            data: {
-                labels: ['하남시','경기도'],
-                datasets: [{
-                    label: '색상',
-                    backgroundColor: [
-                      'red',
-                      'blue'                      
-                    ],
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [5 ,10]
-                }]
-            },
-            options: {
-            scales: {
-                yAxes: [{
-                    display: true,
-                            ticks: {
-                                suggestedMax: 10,// minimum will be 0, unless there is a lower value.					// OR //					
-                                beginAtZero: true // minimum value will be 0.		
-                            }
-                        }]		
-                    }	
-            }
-            
-        });
+    //  let v = JSON.parse("{{ visitor | escapejs }}")
+    //  let n = JSON.parse("{{ name | escapejs }}")
+    let pie = JSON.parse("{{ pie | escapejs }}")
+    let address = "{{ address | escapejs }}"
+    address = address.split(" ")[1]
+    console.log(address);
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);    
+    google.charts.setOnLoadCallback(drawLineChart);
+    google.charts.setOnLoadCallback(drawBarChart);
+        
+      function drawChart() {
+        var arr = []
+        var i = 0
+        arr.push(['방문자', '행정구역'])
+        for (let index = 0; index < pie.length; index++) {
+            if(pie[index].기초지자체명 == address)
+                i = index
+            arr.push([pie[index].기초지자체명, pie[index].방문자수])     
+        }
+        console.log(arr);
+        var data = google.visualization.arrayToDataTable(arr);
+        var arr = new Array(pie.length).fill({});
+        console.log(arr);
+        arr[i] = {offset: 0.2}
+        var options = {
+          title: address+'방문 비율',
+          slices: arr
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+
+    function drawLineChart() {
+
+var data = new google.visualization.DataTable();
+data.addColumn('string', '월');
+data.addColumn('number','방문객 수')
+let line = JSON.parse("{{ line | escapejs }}")
+console.log(line);
+var arr = []
+for (let i = 0; i < line.length; i++) {
+    arr.push([`${i+1}월`, line[i]])
+    console.log(arr + 1);
+}
+console.log(arr);
+data.addRows(arr);
+
+var options = {
+    trendlines: {
+        0: {
+    visibleInLegend: true
+    }
+},
+        hAxis: {
+          title: `${"{{ local | escapejs }}"}월별 `
+        },
+        vAxis: {
+          title: '방문객 수'
+        },
+        
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('linechart'));
+      chart.draw(data, options);
+    }
+    const bar = JSON.parse("{{ bar | escapejs }}")
+    var arr = []
+    arr.push(["광역지자체", "인당 지출액", { role: "style" } ])
+    console.log(bar);
+    bar.foreach(element => {
+        arr.push([bar.광역지자체명, bar.지출액,"blue"])
+    });
+    console.log(arr);
+    function drawBarChart() {
+      var data = google.visualization.arrayToDataTable(arr);
+
+      var view = new google.visualization.DataView(data);
+      
+
+      var options = {
+        title: "광역지자체별 지출액 비교",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("barchart"));
+      chart.draw(view, options);
+  }
 
 </script>
 {% endblock %}

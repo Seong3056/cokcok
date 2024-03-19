@@ -5,5 +5,6 @@ from intro import views
 app_name="intro"
 urlpatterns = [
     path("", views.index),
-    path("detail/<str:local>",views.detail, name="detail")
+    path("detail/<str:local>",views.detail, name="detail"),
+    path("check/",views.check, name="check"),
 ]

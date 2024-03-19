@@ -9,15 +9,23 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/reset-css@4.0.1/reset.min.css"/>
     <link rel="stylesheet" href="{% static 'index.css' %}">
+    <style type="text/css">
+        @font-face { 
+        font-family: 'Typo_CrayonM'; 
+        src:local('fontName Regular'),
+            local('fontName'), 
+            url({% static 'Typo_CrayonM.ttf' %}) format('truetype');
+        } 
+        *{
+            font-family: "Typo_CrayonM";
+        }
+    </style>
     {% block head %}
     {% endblock %}
 </head>
-<body>
+<body style="font-family: 'Typo_CrayonM';">
     <nav>
-        <a id="nav-left" href="/">방방콕콕</a>
-        <div id="nav-right">
-
-        </div>
+        <a id="nav-left" href="/">방방콕콕</a>        
     </nav>
     {% block body %}
     {% endblock %}

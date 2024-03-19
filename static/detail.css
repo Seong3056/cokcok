@@ -5,7 +5,7 @@ section{
 }
 
 .title{
-    margin-left: 120px;
+    margin-left: 40px;
     margin-bottom: 50px;
     font-size: 48px;
     font-weight: bold;
@@ -17,19 +17,23 @@ section{
     flex-direction: row;
     justify-content: space-around;
 }
-    .info .img {
-        width: 280px;
-        height: 280px;
-        background-color: tomato;
-        padding: 25px;
+    .info .img, .info .map {
+        width: 50%;
+        height: 500px;
+        border-radius: 8px;
+        /* background-color: tomato; */
+        /* padding: 25px; */
+    }
+    .info .img{
+        margin-right: 10px;
+    }
+    .info .map{
+        display: flex;
+        flex-direction: row;
+        align-self: center;
     }
 
-    .info .map{
-        width: 280px;
-        height: 280px;
-        background-color: greenyellow;
-        padding: 25px;
-    }
+    
 
 
 .chart{
@@ -39,6 +43,13 @@ section{
     flex-wrap: wrap;
 }
     .chart.wrap {
-        width: 300px;
+        width: 500px;
         margin-right: 30px;
     }
+
+.address-name{
+    margin-top: 35px;
+    font-size: 36px;
+    text-indent: 12px;
+    font-weight: 500;
+}
